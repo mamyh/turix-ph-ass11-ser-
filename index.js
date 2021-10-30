@@ -19,7 +19,7 @@ const run = async () => {
     try {
         await client.connect();
         const database = client.db('travel');
-        const userCollection = database.collection('users');
+        const ordersCollection = database.collection('orders');
         const pakageCollection = database.collection('pakages');
 
         //get all the pakages
@@ -40,6 +40,18 @@ const run = async () => {
         app.post('/pakages', async (req, res) => {
             const data = req.body;
             const result = await pakageCollection.insertOne(data);
+            res.send(result);
+        });
+
+        //Get all the orders
+        app.get('/orders', async (req, res) => {
+            const result = await ordersCollection.find({}).toArray();
+            res.send(result);
+        });
+        //post the order
+        app.post('/orders', async (req, res) => {
+            const data = req.body;
+            const result = await ordersCollection.insertOne(data);
             res.send(result);
         })
     } finally {
