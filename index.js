@@ -48,6 +48,13 @@ const run = async () => {
             const result = await ordersCollection.find({}).toArray();
             res.send(result);
         });
+        //get all the orders by email
+        app.get('/orders/:email', async (req, res) => {
+            const email = req.params.email;
+            const query = { email };
+            const result = await ordersCollection.find(query).toArray();
+            res.send(result);
+        })
         //post the order
         app.post('/orders', async (req, res) => {
             const data = req.body;
