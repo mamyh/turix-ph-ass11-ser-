@@ -40,7 +40,7 @@ const run = async () => {
         app.post('/pakages', async (req, res) => {
             const data = req.body;
             const result = await pakageCollection.insertOne(data);
-            res.send(result)
+            res.send(result);
         })
     } finally {
         // await client.close();
