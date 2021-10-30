@@ -54,11 +54,19 @@ const run = async () => {
             const query = { email };
             const result = await ordersCollection.find(query).toArray();
             res.send(result);
-        })
+        });
+
         //post the order
         app.post('/orders', async (req, res) => {
             const data = req.body;
             const result = await ordersCollection.insertOne(data);
+            res.send(result);
+        });
+        //delete order by id 
+        app.delete('/orders/:id', async (req, res) => {
+            const id = req.params.id;
+            const query = { _id: objectId(id) };
+            const result = await ordersCollection.deleteOne(query);
             res.send(result);
         })
     } finally {
