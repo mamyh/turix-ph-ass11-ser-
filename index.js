@@ -2,6 +2,8 @@ const express = require('express');
 const cors = require('cors');
 const { MongoClient } = require('mongodb');
 
+const objectId = require('mongodb').ObjectId;
+
 require('dotenv').config();
 
 const app = express();
@@ -14,11 +16,35 @@ app.use(cors());
 app.use(express.json());
 
 const run = async () => {
-    await client.connect();
-    const database = client.db('travel');
-    const travelCollection = database.collection('users');
+    try {
+        await client.connect();
+        const database = client.db('travel');
+        const userCollection = database.collection('users');
+        const pakageCollection = database.collection('pakages');
 
+        //get all the pakages
+        app.get('/pakages', async (req, res) => {
+            const result = await pakageCollection.find({}).toArray();
+            res.send(result);
+        })
 
+        //get a single pakage 
+        app.get('/pakages/:id', async (req, res) => {
+            const id = req.params.id;
+            const query = { _id: objectId(id) };
+            const result = await pakageCollection.findOne(query);
+            res.send(result);
+        })
+
+        //post a single data to the database 
+        app.post('/pakages', async (req, res) => {
+            const data = req.body;
+            const result = await pakageCollection.insertOne(data);
+            res.send(result)
+        })
+    } finally {
+        // await client.close();
+    }
 }
 
 run().catch(console.dir);
