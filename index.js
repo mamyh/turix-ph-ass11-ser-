@@ -48,22 +48,22 @@ const run = async () => {
             const result = await ordersCollection.find({}).toArray();
             res.send(result);
         });
+        //count if the element exists or not 
+        app.get('/orders/count', async (req, res) => {
+
+            const count = await ordersCollection.find(req.query).count();
+            console.log(count);
+            res.json(count);
+        })
         //get a single order by id 
         app.get('/orders/:id', async (req, res) => {
-            console.log('id')
+
             const id = req.params.id;
             const query = { _id: id };
             const result = await ordersCollection.findOne(query);
             res.send(result);
         })
-        //count if the element exists or not 
-        app.get('/orders/count/:id', async (req, res) => {
-            const id = req.params.id;
-            const query = { _id: id };
-            const count = await ordersCollection.find(query).count();
-            console.log(count);
-            res.json(count);
-        })
+
         //get all the orders by email
         app.get('/orders/email/:email', async (req, res) => {
             console.log('email')
