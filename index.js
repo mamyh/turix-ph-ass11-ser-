@@ -48,6 +48,13 @@ const run = async () => {
             const result = await ordersCollection.find({}).toArray();
             res.send(result);
         });
+        //get a single order by id 
+        app.get('/orders/:id', async (req, res) => {
+            const id = req.params.id;
+            const query = { _id: objectId(id) };
+            const result = await pakageCollection.findOne(query);
+            res.send(result);
+        })
         //get all the orders by email
         app.get('/orders/:email', async (req, res) => {
             const email = req.params.email;
@@ -81,5 +88,4 @@ app.get('/', (req, res) => {
 
 app.listen(port, () => {
     console.log('listening to the port ', port);
-})
-
+});
