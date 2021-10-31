@@ -90,6 +90,7 @@ const run = async () => {
         app.put('/orders/:id', async (req, res) => {
             const id = req.params.id;
             const updatedInfo = req.body;
+            console.log(updatedInfo);
             const filter = { _id: objectId(id) };
             const options = { upsert: true };
             const updateDoc = {
