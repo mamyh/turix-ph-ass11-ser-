@@ -50,13 +50,15 @@ const run = async () => {
         });
         //get a single order by id 
         app.get('/orders/:id', async (req, res) => {
+            console.log('id')
             const id = req.params.id;
             const query = { _id: objectId(id) };
             const result = await ordersCollection.findOne(query);
             res.send(result);
         })
         //get all the orders by email
-        app.get('/orders/:email', async (req, res) => {
+        app.get('/orders/email/:email', async (req, res) => {
+            console.log('email')
             const email = req.params.email;
             const query = { email };
             const result = await ordersCollection.find(query).toArray();
