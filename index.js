@@ -14,6 +14,10 @@ const port = process.env.PORT || 5000;
 //middleware
 
 app.use(cors());
+// app.use((req, res, next) => {
+//     res.header({ "Access-Control-Allow-Origin": "*" });
+//     next();
+// })
 app.use(express.json());
 
 const run = async () => {
@@ -50,10 +54,9 @@ const run = async () => {
             res.send(result);
         });
         //count if the element exists or not 
-        app.get('/orders/count/:email/:id', async (req, res) => {
-            const id = req.params.id;
-            const email = req.params.email;
-            const query = { _id: id, email };
+        app.get('/orders/count', async (req, res) => {
+            const { id, email } = req.query;
+            const query = { pakageId: id, email };
             const count = await ordersCollection.find(query).count();
             console.log(count);
             res.json(count);
@@ -86,7 +89,7 @@ const run = async () => {
         //delete order by id 
         app.delete('/orders/:id', async (req, res) => {
             const id = req.params.id;
-            const query = { _id: id };
+            const query = { _id: objectId(id) };
             const result = await ordersCollection.deleteOne(query);
             res.send(result);
         })
