@@ -50,9 +50,11 @@ const run = async () => {
             res.send(result);
         });
         //count if the element exists or not 
-        app.get('/orders/count', async (req, res) => {
-
-            const count = await ordersCollection.find(req.query).count();
+        app.get('/orders/count/:email/:id', async (req, res) => {
+            const id = req.params.id;
+            const email = req.params.email;
+            const query = { _id: id, email };
+            const count = await ordersCollection.find(query).count();
             console.log(count);
             res.json(count);
         })
