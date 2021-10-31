@@ -86,6 +86,20 @@ const run = async () => {
             const result = await ordersCollection.insertOne(data);
             res.send(result);
         });
+        //update status 
+        app.put('/orders/:id', async (req, res) => {
+            const id = req.params.id;
+            const updatedInfo = req.body;
+            const filter = { _id: objectId(id) };
+            const options = { upsert: false };
+            const updateDoc = {
+                $set: {
+                    status: updatedInfo.status
+                }
+            };
+            const result = await ordersCollection.updateOne(filter, updateDoc, options);
+            res.send(result);
+        })
         //delete order by id 
         app.delete('/orders/:id', async (req, res) => {
             const id = req.params.id;
