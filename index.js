@@ -52,14 +52,14 @@ const run = async () => {
         app.get('/orders/:id', async (req, res) => {
             console.log('id')
             const id = req.params.id;
-            const query = { _id: objectId(id) };
+            const query = { _id: id };
             const result = await ordersCollection.findOne(query);
             res.send(result);
         })
         //count if the element exists or not 
         app.get('/orders/count/:id', async (req, res) => {
             const id = req.params.id;
-            const query = { _id: objectId(id) };
+            const query = { _id: id };
             const count = await ordersCollection.find(query).count();
             console.log(count);
             res.json(count);
@@ -83,7 +83,7 @@ const run = async () => {
         //delete order by id 
         app.delete('/orders/:id', async (req, res) => {
             const id = req.params.id;
-            const query = { _id: objectId(id) };
+            const query = { _id: id };
             const result = await ordersCollection.deleteOne(query);
             res.send(result);
         })
