@@ -52,7 +52,7 @@ const run = async () => {
         app.get('/orders/:id', async (req, res) => {
             const id = req.params.id;
             const query = { _id: objectId(id) };
-            const result = await pakageCollection.findOne(query);
+            const result = await ordersCollection.findOne(query);
             res.send(result);
         })
         //get all the orders by email
@@ -60,6 +60,7 @@ const run = async () => {
             const email = req.params.email;
             const query = { email };
             const result = await ordersCollection.find(query).toArray();
+            console.log(result);
             res.send(result);
         });
 
