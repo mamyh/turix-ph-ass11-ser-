@@ -56,6 +56,14 @@ const run = async () => {
             const result = await ordersCollection.findOne(query);
             res.send(result);
         })
+        //count if the element exists or not 
+        app.get('/orders/count/:id', async (req, res) => {
+            const id = req.params.id;
+            const query = { _id: objectId(id) };
+            const count = await ordersCollection.find(query).count();
+            console.log(count);
+            res.json(count);
+        })
         //get all the orders by email
         app.get('/orders/email/:email', async (req, res) => {
             console.log('email')
