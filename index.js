@@ -91,7 +91,7 @@ const run = async () => {
             const id = req.params.id;
             const updatedInfo = req.body;
             const filter = { _id: objectId(id) };
-            const options = { upsert: false };
+            const options = { upsert: true };
             const updateDoc = {
                 $set: {
                     status: updatedInfo.status
